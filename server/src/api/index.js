@@ -36,13 +36,11 @@ router.post("/myList", hasToken, async (req, res, next) => {
   try {
     let { page, size } = req.params;
     let token = req.headers.token;
-    console.log(1)
+
     // default sizes
     if (typeof page === "undefined") page = 0;
     if (typeof size === "undefined") size = 5;
 
-    console.log(2)
-    
     const response = await fetch(`https://devakademi.sahibinden.com/api//classified/myList?page=${page}&size=${size}`,
       {
         mode: 'cors',
@@ -54,7 +52,6 @@ router.post("/myList", hasToken, async (req, res, next) => {
       });
     const json = await response.json();
     res.json(json)
-    console.log(3)
 
   } catch (err) {
     next(err);
