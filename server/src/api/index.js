@@ -11,6 +11,30 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/list", async (req, res, next) => {
+  try {
+    let { page, size } = req.params;
+
+    // default sizes
+    if (typeof page === "undefined") page = 0;
+    if (typeof size === "undefined") size = 5;
+
+    const response = await fetch(`https://devakademi.sahibinden.com/api/classified/list?page=${page}&size=${size}`,
+      {
+        mode: 'cors',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    const json = await response.json();
+    res.json(json)
+
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post("/token", async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -41,7 +65,7 @@ router.post("/myList", hasToken, async (req, res, next) => {
     if (typeof page === "undefined") page = 0;
     if (typeof size === "undefined") size = 5;
 
-    const response = await fetch(`https://devakademi.sahibinden.com/api//classified/myList?page=${page}&size=${size}`,
+    const response = await fetch(`https://devakademi.sahibinden.com/api/classified/myList?page=${page}&size=${size}`,
       {
         mode: 'cors',
         method: 'POST',
