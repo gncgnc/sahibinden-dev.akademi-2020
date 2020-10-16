@@ -4,10 +4,12 @@
     <form @submit.prevent="submitLogin">
       <b-field
         label="Kullanıcı Adı"
-        type="is-success"
-        message="This username is available"
       >
-        <b-input v-model="username" value="johnsilver" maxlength="30"></b-input>
+        <b-input
+          v-model="username"
+          maxlength="30"
+          type="{ hasError: 'is-error' }"
+        ></b-input>
       </b-field>
 
       <b-field label="Şifre">
@@ -38,11 +40,14 @@ export default {
   },
   methods: {
     ...mapActions(["requestAdminToken"]),
-    submitLogin() {
+    async submitLogin() {
       const { username, password } = this;
-      console.log(this.username, this.password);
-      this.requestAdminToken({ username, password });
-      // this.$router.push({path: "postings"});
+      await this.requestAdminToken({ username, password });
+      if (this.$store.state.isLoggedIn) {
+        this.$router.push({ path: "/admin" });
+      } else {
+        this.hasError = true;
+      }
     },
   },
 };

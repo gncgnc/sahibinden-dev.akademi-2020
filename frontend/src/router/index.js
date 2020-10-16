@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Postings from '../views/Postings.vue';
+import Admin from '../views/Admin.vue';
 
 Vue.use(VueRouter);
 
@@ -25,7 +26,13 @@ const routes = [
     path: '/postings',
     name: 'Postings',
     component: Postings,
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
   }
+
 ];
 
 const router = new VueRouter({

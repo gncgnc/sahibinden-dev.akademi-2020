@@ -10,7 +10,7 @@
         <b-navbar-item href="#" tag="router-link" :to="{ path: '/' }">
           Ana Sayfa
         </b-navbar-item>
-        <b-navbar-item href="#" tag="router-link" :to="{ path: '/login' }">
+        <b-navbar-item href="#" tag="router-link" :to="{ path: '/admin' }">
           Admin
         </b-navbar-item>
         <b-navbar-item href="#" tag="router-link" :to="{ path: '/postings' }">

@@ -19,10 +19,12 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async requestAdminToken(ctx, admin) {
+    async requestAdminToken({ commit }, admin) {
+      commit("setIsLoggedIn", false);
+
       const { username, password } = admin;
-      try {
-        const response = await fetch("http://localhost:5000/api/v1/token",
+      return new Promise((resolve, reject) => {
+        fetch("http://localhost:5000/api/v1/token",
           {
             mode: 'cors',
             method: 'POST',
@@ -30,13 +32,19 @@ export default new Vuex.Store({
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({ username, password }),
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "Valid") {
+              commit("setAdminToken", data.token);
+              commit("setIsLoggedIn", true);
+              resolve();
+            }
+          }).catch((err) => {
+            console.error(err);
+            reject();
           });
-        const json = await response.json();
-        ctx.commit("setAdminToken", json.token);
-        ctx.commit("setIsLoggedIn", true);
-      } catch (err) {
-        console.error(err);
-      }
+      });
     },
   },
   modules: {
