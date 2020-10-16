@@ -1,2 +1,3 @@
-# levigenco - dev.akademi2020
+# dev.akademi Projesi
 
+dev.akademi için bir proje.
