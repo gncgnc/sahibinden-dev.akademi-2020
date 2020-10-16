@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 
 router.get("/list", async (req, res, next) => {
   try {
-    let { page, size } = req.params;
+    let { page, size } = req.query;
 
     // default sizes
     if (typeof page === "undefined") page = 0;
@@ -35,10 +35,26 @@ router.get("/list", async (req, res, next) => {
   }
 });
 
+router.get("/load", async (req, res, next) => {
+  try {
+    let id = req.query.id;
+    let requestUrl = `https://devakademi.sahibinden.com/api/classified/load?id=${id}`;
+    const response = await fetch(requestUrl,
+      {
+        mode: 'cors',
+        method: 'GET',
+      });
+    const json = await response.json();
+    res.json(json)
+
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post("/token", async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    console.log(username, password)
     const response = await fetch("https://devakademi.sahibinden.com/api/authorization/token",
       {
         mode: 'cors',
@@ -58,7 +74,7 @@ router.post("/token", async (req, res, next) => {
 
 router.post("/myList", hasToken, async (req, res, next) => {
   try {
-    let { page, size } = req.params;
+    let { page, size } = req.query;
     let token = req.headers.token;
 
     // default sizes
