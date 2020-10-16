@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     adminToken: null,
-    currentAdminPosts: [],
+    adminPostings: [],
+    postings: [],
     isLoggedIn: false,
   },
   mutations: {
@@ -16,13 +17,16 @@ export default new Vuex.Store({
 
     setIsLoggedIn(state, isLoggedIn) {
       state.isLoggedIn = isLoggedIn;
-    }
+    },
+
+    setPostings(state, postings) {
+      state.postings = postings;
+    },
   },
   actions: {
-    async requestAdminToken({ commit }, admin) {
+    async requestAdminToken({ commit }, { username, password }) {
       commit("setIsLoggedIn", false);
 
-      const { username, password } = admin;
       return new Promise((resolve, reject) => {
         fetch("http://localhost:5000/api/v1/token",
           {
@@ -40,6 +44,28 @@ export default new Vuex.Store({
               commit("setIsLoggedIn", true);
               resolve();
             }
+          }).catch((err) => {
+            console.error(err);
+            reject();
+          });
+      });
+    },
+    async requestPostings({ commit }, { page, size }) {
+      console.log("got here");
+      return new Promise((resolve, reject) => {
+        fetch(`http://localhost:5000/api/v1/list?page=${page}&size=${size}`,
+          {
+            mode: 'cors',
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            commit("setPostings", data.content);
+            resolve();
           }).catch((err) => {
             console.error(err);
             reject();
