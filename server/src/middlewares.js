@@ -15,7 +15,17 @@ function errorHandler(err, req, res, next) {
   });
 }
 
+function hasToken(req, res, next) {
+  if (req.headers.token) {
+    next();
+  } else {
+    res.status(401)
+    next(new Error("Unauthorized."))
+  }
+}
+
 module.exports = {
   notFound,
-  errorHandler
+  errorHandler,
+  hasToken,
 };

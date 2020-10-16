@@ -1,14 +1,12 @@
 <template>
-  <div class="home">
-    <h1>Home</h1>
-  </div>
+  <section class="container">
+    <h1 class="title my-4">dev.akademi Projesi</h1>
+  </section>
 </template>
 
 <script>
-
 export default {
-  name: 'Home',
-  components: {
-  },
+  name: "Home",
+  components: {},
 };
 </script>
