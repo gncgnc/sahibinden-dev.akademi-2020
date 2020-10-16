@@ -74,7 +74,6 @@ export default new Vuex.Store({
           })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
             ctx.commit("setAdminPostings", data.content);
             resolve();
           }).catch((err) => {
@@ -95,7 +94,6 @@ export default new Vuex.Store({
           })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
             commit("setPostings", data.content);
             resolve();
           }).catch((err) => {

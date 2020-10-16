@@ -23,7 +23,7 @@ export default {
     ...mapState(["postings"]),
   },
   async mounted() {
-    await this.$store.dispatch("requestPostings", { page: 0, size: 5 });
+    await this.$store.dispatch("requestPostings", { page: 0, size: 30 });
   },
   methods: {
     // ...mapActions(["requestPostings"])

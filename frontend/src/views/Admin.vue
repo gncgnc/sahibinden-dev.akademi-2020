@@ -2,7 +2,8 @@
   <section class="container">
     <h1 class="title my-4">Admin Paneli</h1>
 
-    <PostingList :postings="adminPostings"></PostingList>
+    <!-- <PostingList :postings="adminPostings"></PostingList> -->
+    <PostingList :admin="true" :postings="postings"></PostingList>
   </section>
 </template>
 
@@ -19,14 +20,16 @@ export default {
     if (!this.$store.state.isLoggedIn) {
       this.$router.push("login");
     } else {
-      await this.$store.dispatch("requestAdminPostings", { page: 0, size: 5 });
+      // await this.$store.dispatch("requestAdminPostings", { page: 0, size: 5 });
+      await this.$store.dispatch("requestPostings", { page: 0, size: 5 });
     }
   },
   data() {
     return {};
   },
   computed: {
-    ...mapState(["adminPostings"]),
+    // ...mapState(["adminPostings"]),
+    ...mapState(["postings"]),
   },
 };
 </script>

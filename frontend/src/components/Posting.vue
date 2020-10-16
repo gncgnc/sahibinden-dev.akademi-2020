@@ -48,9 +48,7 @@
       </div>
     </div>
     <footer class="card-footer" v-if="admin">
-      <a href="#" class="card-footer-item">Save</a>
-      <a href="#" class="card-footer-item">Edit</a>
-      <a href="#" class="card-footer-item">Delete</a>
+      <a href="#" class="card-footer-item">Approve</a>
     </footer>
   </div>
 </template>
