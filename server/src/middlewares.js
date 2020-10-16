@@ -16,6 +16,7 @@ function errorHandler(err, req, res, next) {
 }
 
 function hasToken(req, res, next) {
+  console.log(req.headers)
   if (req.headers.token) {
     next();
   } else {

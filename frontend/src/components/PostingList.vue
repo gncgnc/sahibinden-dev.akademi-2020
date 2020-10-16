@@ -1,11 +1,12 @@
 <template>
   <div>
-    <div class="card is-narrow" v-if="!hasPostings">İlan yok...</div>
+    <div class="card is-narrow py-4" v-if="!hasPostings">İlan yok...</div>
     <Posting
       class="is-narrow"
       v-for="posting in postings"
       :key="posting.id"
       :data="posting"
+      :admin="admin"
     ></Posting>
   </div>
 </template>
@@ -22,6 +23,10 @@ export default {
   props: {
     postings: {
       type: Array,
+    },
+    admin: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

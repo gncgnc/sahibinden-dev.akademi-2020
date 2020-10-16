@@ -77,6 +77,8 @@ router.post("/myList", hasToken, async (req, res, next) => {
     let { page, size } = req.query;
     let token = req.headers.token;
 
+    console.log("token: ", token)
+
     // default sizes
     if (typeof page === "undefined") page = 0;
     if (typeof size === "undefined") size = 5;

@@ -22,6 +22,11 @@ export default new Vuex.Store({
     setPostings(state, postings) {
       state.postings = postings;
     },
+
+    setAdminPostings(state, postings) {
+      state.adminPostings = postings;
+    },
+
   },
   actions: {
     async requestAdminToken({ commit }, { username, password }) {
@@ -50,8 +55,35 @@ export default new Vuex.Store({
           });
       });
     },
+    async requestAdminPostings(ctx, { page, size }) {
+      const token = ctx.state.adminToken;
+      console.log("token ", token);
+      return new Promise((resolve, reject) => {
+        if (!ctx.state.isLoggedIn) {
+          console.log("not logged in");
+          reject();
+        }
+        fetch(`http://localhost:5000/api/v1/myList?page=${page}&size=${size}`,
+          {
+            mode: 'cors',
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              token
+            },
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            ctx.commit("setAdminPostings", data.content);
+            resolve();
+          }).catch((err) => {
+            console.error(err);
+            reject();
+          });
+      });
+    },
     async requestPostings({ commit }, { page, size }) {
-      console.log("got here");
       return new Promise((resolve, reject) => {
         fetch(`http://localhost:5000/api/v1/list?page=${page}&size=${size}`,
           {
@@ -72,7 +104,9 @@ export default new Vuex.Store({
           });
       });
     },
+
   },
+
   modules: {
   },
 });

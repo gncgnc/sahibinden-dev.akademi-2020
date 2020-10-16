@@ -11,16 +11,6 @@
 
     <div class="card-content">
       <div class="content">
-        <!-- <div class="columns is-vcentered">
-          <b class="column is-narrow has-text-right"> Bilgi</b>
-          <div class="column has-text-left">{{ data.description }}</div>
-        </div>
-
-        <div class="columns is-vcentered">
-          <b class="column is-narrow has-text-right"> İlan tarihi </b>
-          <div class="column">{{ new Date(data.date).toLocaleString() }}</div>
-        </div> -->
-
         <div class="grid">
           <div class="has-text-weight-bold">
             <div>Bilgi</div>
@@ -54,11 +44,10 @@
           <div class="has-text-left">
             {{ data.status }}
           </div>
-
         </div>
       </div>
     </div>
-    <footer class="card-footer">
+    <footer class="card-footer" v-if="admin">
       <a href="#" class="card-footer-item">Save</a>
       <a href="#" class="card-footer-item">Edit</a>
       <a href="#" class="card-footer-item">Delete</a>
@@ -70,6 +59,10 @@
 export default {
   name: "Posting",
   props: {
+    admin: {
+      type: Boolean,
+      default: false,
+    },
     data: {
       type: Object,
       default: () => ({
@@ -125,5 +118,4 @@ export default {
   justify-self: end;
   align-self: center;
 }
-
 </style>
